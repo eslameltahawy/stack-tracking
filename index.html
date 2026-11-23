@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PM + Figma | خطة 16 أسبوع</title>
+<style>
+:root{--bg:#f6f7f8;--card:#fff;--ink:#18202a;--muted:#66717d;--line:#e4e8ec;--accent:#315b52;--accent2:#dcebe6;--warn:#b77924;--shadow:0 8px 28px rgba(25,35,45,.06)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Tahoma,Arial,sans-serif;line-height:1.7}
+header{padding:28px 20px 18px;max-width:1180px;margin:auto}h1{margin:0 0 6px;font-size:clamp(25px,4vw,38px);letter-spacing:-.5px}header p{color:var(--muted);margin:0}
+main{max-width:1180px;margin:auto;padding:0 20px 60px}.dashboard{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:14px 0 22px}
+.stat,.panel,.week-card,.note-card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;box-shadow:var(--shadow)}
+.stat .label{font-size:13px;color:var(--muted)}.stat .num{font-size:26px;font-weight:750}.progress-wrap{height:9px;background:#e9edef;border-radius:20px;overflow:hidden;margin-top:8px}.progress{height:100%;width:0;background:var(--accent);transition:width .3s}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}.toolbar input,.toolbar select,textarea,input[type=date]{background:white;border:1px solid var(--line);padding:10px 12px;border-radius:10px;color:var(--ink);font:inherit}.toolbar input{flex:1;min-width:220px}
+.btn{border:1px solid var(--line);background:white;color:var(--ink);padding:9px 13px;border-radius:10px;font:inherit;cursor:pointer}.btn.primary{background:var(--accent);color:white;border-color:var(--accent)}.btn:hover{filter:brightness(.97)}
+.layout{display:grid;grid-template-columns:290px 1fr;gap:18px;align-items:start}.sidebar{position:sticky;top:12px}.sidebar .panel{padding:12px}.week-nav{display:flex;flex-direction:column;gap:6px;max-height:72vh;overflow:auto}.week-btn{border:0;text-align:right;background:transparent;padding:10px;border-radius:10px;cursor:pointer;color:var(--ink);font:inherit}.week-btn.active{background:var(--accent2);color:var(--accent);font-weight:700}.week-btn small{display:block;color:var(--muted);font-size:12px}.content{min-width:0}.week-card{padding:22px}.week-title{display:flex;justify-content:space-between;align-items:start;gap:10px;flex-wrap:wrap}.week-title h2{margin:0;font-size:24px}.tag{display:inline-block;padding:3px 9px;border-radius:999px;background:var(--accent2);color:var(--accent);font-size:12px;font-weight:700}.week-card h3{font-size:17px;margin:22px 0 8px}.week-card ul{padding-right:22px;margin:7px 0}.week-card li{margin:4px 0}.tasks{display:flex;flex-direction:column;gap:9px}.task{display:flex;gap:10px;padding:11px;border:1px solid var(--line);border-radius:12px;align-items:flex-start}.task input{margin-top:8px;accent-color:var(--accent);width:17px;height:17px}.task.done{background:#f4faf7}.task .tasktext{flex:1}.task .tasktext strong{display:block}.task .tasktext small{color:var(--muted)}.deliverable{background:#f3f6f5;border-radius:12px;padding:14px;border-right:3px solid var(--accent)}
+details{border-top:1px solid var(--line);margin-top:18px;padding-top:12px}summary{cursor:pointer;font-weight:700}.notes textarea{width:100%;min-height:130px;resize:vertical;margin-top:8px}.daily{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:14px}.daybox{border:1px solid var(--line);border-radius:12px;padding:12px}.daybox h4{margin:0 0 6px}.daybox p{font-size:13px;color:var(--muted);margin:0}.daybox textarea{width:100%;min-height:80px;margin-top:8px;resize:vertical;border:1px solid var(--line);border-radius:8px;padding:8px;font:inherit}
+.resource a{color:var(--accent);word-break:break-word}.muted{color:var(--muted)}.reset{color:#9b3b35}.foot{margin-top:20px;color:var(--muted);font-size:13px}.toast{position:fixed;bottom:20px;left:20px;background:#17252a;color:#fff;padding:12px 16px;border-radius:12px;display:none}
+@media(max-width:800px){.dashboard{grid-template-columns:repeat(2,1fr)}.layout{grid-template-columns:1fr}.sidebar{position:static}.week-nav{display:grid;grid-template-columns:repeat(2,1fr);max-height:none}.daily{grid-template-columns:1fr}}
+@media print{body{background:white}.sidebar,.toolbar,.btn{display:none}.layout{grid-template-columns:1fr}.week-card,.stat{box-shadow:none}}
+</style>
+</head>
+<body>
+<header>
+<h1>Product Management × Figma</h1>
+<p>برنامج عملي مكثف لمدة 16 أسبوعًا · 12 ساعة أسبوعيًا · أساسيات PM → ممارسة متقدمة + Figma</p>
+</header>
+<main>
+<section class="dashboard">
+<div class="stat"><div class="label">إجمالي المهام المنجزة</div><div class="num" id="doneCount">0</div><div class="progress-wrap"><div class="progress" id="overallProgress"></div></div></div>
+<div class="stat"><div class="label">التقدم الكلي</div><div class="num" id="progressPct">0%</div><div class="muted" id="progressLabel">ابدأ أول مهمة</div></div>
+<div class="stat"><div class="label">الساعات المسجلة</div><div class="num"><span id="hours">0</span> / 192</div><div class="muted">هدف 12 ساعة × 16 أسبوعًا</div></div>
+<div class="stat"><div class="label">الأسبوع الحالي</div><div class="num" id="currentWeek">1</div><div class="muted" id="weekStatus">لم تحدد تاريخ البداية</div></div>
+</section>
+<div class="toolbar">
+<input id="search" placeholder="ابحث داخل الأسبوع أو المهام…" aria-label="بحث">
+<input id="startDate" type="date" aria-label="تاريخ البداية">
+<button class="btn primary" id="saveStart">حفظ تاريخ البداية</button>
+<button class="btn" id="export">تصدير بياناتي</button>
+<button class="btn" id="importBtn">استيراد</button><input type="file" id="importFile" accept=".json" hidden>
+<button class="btn" onclick="window.print()">طباعة</button>
+</div>
+<div class="layout">
+<aside class="sidebar"><div class="panel"><strong>خريطة البرنامج</strong><div class="week-nav" id="weekNav"></div></div></aside>
+<section class="content" id="content"></section>
+</div>
+<div class="foot">يُحفظ تقدمك وملاحظاتك تلقائيًا على هذا الجهاز/المتصفح (Local Storage). صدّر نسخة JSON احتياطية دوريًا، خصوصًا قبل مسح بيانات المتصفح.</div>
+</main><div class="toast" id="toast"></div>
+<script>
+const weeks = [
+{title:"Product Discovery & Customer Research",phase:"PM Core · 1/4",goal:"انتقل من افتراضات المشكلة إلى فهم مدعوم بمحادثات وأدلة.",topics:["Customer-centric product thinking","Problem vs solution","Customer segments & ICP","Interview design: أسئلة مفتوحة، تجنب التحيز","Observation واحتياجات المستخدم"],tasks:[
+["تعلم", "ابدأ وحدات كورس Real-World Product Management المرتبطة بالعميل والمشكلة." ,"2 ساعة"],
+["اختيار المنتج", "اختر منتجًا واحدًا لمشروع التخرج. الأفضل SaaS B2B لمشكلة تعرف سياقها. اكتب سبب الاختيار." ,"1 ساعة"],
+["Problem framing", "اكتب 3 صياغات للمشكلة بدون اقتراح الحل، وحدد المستخدم المتأثر والسياق." ,"1 ساعة"],
+["Interview plan", "جهّز 10 أسئلة مقابلة غير leading؛ تشمل آخر تجربة، البدائل، الأثر، والحلول الحالية." ,"1 ساعة"],
+["مقابلات", "نفّذ 5 مقابلات مع مستخدمين محتملين (20–30 دقيقة). لا تبيع الفكرة ولا تشرح الحل." ,"3 ساعة"],
+["تحليل", "لخّص كل مقابلة، واستخرج pain points والاقتباسات والأنماط المشتركة." ,"2 ساعة"],
+["تسليم", "أنشئ Problem Discovery Document: المستخدم، المشكلة، الأدلة، الأسئلة المفتوحة، ما تعلمته." ,"2 ساعة"]],
+deliver:"Problem Discovery Document + Interview notes (5 مقابلات) + قائمة افتراضات."
+},
+{title:"Product Strategy & Market",phase:"PM Core · 2/4",goal:"تحديد من نخدم، لماذا، وما موقع المنتج في السوق.",topics:["Product vision & strategic narrative","ICP and segmentation","Competitive analysis","Value proposition & positioning","Market sizing: TAM/SAM/SOM (بافتراضات معلنة)"],tasks:[
+["تعلم", "أكمل وحدات الاستراتيجية والسوق في Coursera." ,"2 ساعة"],
+["ICP", "حدد ICP بأبعاد واضحة: القطاع، حجم الشركة، سلوك، احتياج، triggers، exclusions." ,"1 ساعة"],
+["Competitors", "حلل 5 منافسين: المستخدم، القيمة، workflow، التسعير، نقاط القوة/الضعف." ,"2 ساعة"],
+["Market sizing", "اعمل تقدير TAM/SAM/SOM من bottom-up، وثّق المصادر والافتراضات." ,"2 ساعة"],
+["Positioning", "اكتب Value Proposition وpositioning statement واختبر وضوحهما مع 2 أشخاص." ,"1 ساعة"],
+["Vision", "اكتب Product Vision، strategic bets، و3 أشياء لن يفعلها المنتج." ,"2 ساعة"],
+["تسليم", "اجمع Strategy brief من 2–3 صفحات، وراجع هل الأدلة تدعم اتجاهك." ,"2 ساعة"]],
+deliver:"Product Strategy Brief: ICP، competitive map، sizing، positioning، vision، strategic choices."
+},
+{title:"Product Definition & Delivery",phase:"PM Core · 3/4",goal:"حوّل الاستراتيجية إلى MVP ومتطلبات قابلة للتنفيذ.",topics:["MVP & scope","PRD structure","User stories & acceptance criteria","Prioritization: RICE / impact-effort","Roadmaps and dependencies"],tasks:[
+["تعلم", "أكمل وحدات PRD، MVP، roadmap، prioritization في الكورس." ,"2 ساعة"],
+["MVP", "حدد MVP: ما الذي يجب أن يكون موجودًا لتقديم القيمة؟ وما الذي يؤجل؟" ,"1 ساعة"],
+["User flows", "ارسم flow أساسيًا و2 flows بديلة/استثنائية على الورق أو FigJam." ,"2 ساعة"],
+["PRD", "اكتب PRD: المشكلة، أهداف، scope/non-scope، flows، requirements، risks، metrics." ,"2 ساعة"],
+["Stories", "اكتب 12–20 User Stories مع Acceptance Criteria قابلة للتحقق." ,"2 ساعة"],
+["Prioritize", "استخدم RICE أو impact-effort؛ وضّح البيانات والافتراضات ولا تتعامل مع الرقم كحقيقة." ,"1 ساعة"],
+["Roadmap", "أنشئ Roadmap 3 أشهر على مستوى outcomes وليس قائمة features فقط." ,"2 ساعة"]],
+deliver:"MVP definition + PRD + User Stories + prioritization + outcome-based roadmap."
+},
+{title:"Metrics, Experiments & Business",phase:"PM Core · 4/4",goal:"ربط المنتج بأهداف قابلة للقياس وبالنتيجة التجارية.",topics:["North Star & metric tree","Activation, retention, conversion","OKRs","Experiment design and A/B testing","Pricing, LTV, basic unit economics"],tasks:[
+["تعلم", "أكمل وحدات metrics، experiments، business/pricing." ,"2 ساعة"],
+["Metric tree", "حدد North Star، واشتق 3–5 drivers ومؤشرات guardrail." ,"2 ساعة"],
+["OKRs", "اكتب Objective واحدًا و3 Key Results measurable." ,"1 ساعة"],
+["Experiment", "صمم تجربة: hypothesis، target، variants، metric، duration/decision rule، risks." ,"2 ساعة"],
+["Retention", "حدد activation event وretention definition/cohort المناسبين لمنتجك." ,"1 ساعة"],
+["Business", "ضع نموذج pricing مبدئي، وunit economics مبسطة مع توضيح الافتراضات." ,"2 ساعة"],
+["تسليم", "Metrics & Experimentation Plan؛ راجع الاتساق بين strategy والـ metrics." ,"2 ساعة"]],
+deliver:"Metric Tree + OKRs + Experiment Brief + pricing/unit economics assumptions."
+},
+{title:"UX Research: From Evidence to Insight",phase:"UX · 1/2",goal:"تنظيم الأدلة وتحويلها إلى فهم UX قابل للعمل.",topics:["UX vs UI vs CX","JTBD","Empathy mapping","Affinity mapping","Journey maps","Research synthesis"],tasks:[
+["تعلم", "ابدأ Advanced UX Strategies for Product Managers: أجزاء research/JTBD." ,"2 ساعة"],
+["JTBD", "اكتب 3 JTBD بصيغة situation–motivation–outcome من المقابلات." ,"1 ساعة"],
+["Affinity", "حوّل الملاحظات إلى affinity clusters؛ سمّ كل theme." ,"2 ساعة"],
+["Empathy", "أنشئ empathy map لشريحة واحدة؛ اربط كل نقطة بمصدر/اقتباس." ,"1 ساعة"],
+["Journey", "ارسم journey من trigger إلى outcome، مع pain points وopportunities." ,"2 ساعة"],
+["Opportunity", "حدد 3 opportunities واكتب hypotheses قابلة للاختبار." ,"2 ساعة"],
+["تسليم", "Research synthesis pack: JTBD، themes، journey، opportunity statements." ,"2 ساعة"]],
+deliver:"UX Research synthesis backed by evidence (JTBD, affinity, journey, opportunities)."
+},
+{title:"UX Audit & Design Foundations",phase:"UX · 2/2",goal:"تقييم تجربة موجودة وبناء مبادئ تصميم قابلة للتطبيق.",topics:["Heuristic evaluation","UX scorecards","Usability principles","Accessibility basics","Information architecture","Low-fi sketches"],tasks:[
+["تعلم", "أكمل UX Scorecard وHeuristic Evaluation وwireframing في الكورس." ,"2 ساعة"],
+["Audit", "اختر flow لدى منافس وقيمه باستخدام heuristics؛ لا تخترع بيانات مستخدم." ,"2 ساعة"],
+["Scorecard", "أنشئ scorecard من 5–8 معايير، مع evidence ومستوى severity." ,"1 ساعة"],
+["IA", "حدد information architecture/sections للمنتج، وأعد ترتيبها حسب المستخدم." ,"1 ساعة"],
+["Sketch", "ارسم 8–10 screens على الورق أو FigJam قبل Figma." ,"2 ساعة"],
+["Flow", "ارسم happy path و2 edge flows: error/empty/permission أو حالة مناسبة." ,"2 ساعة"],
+["تسليم", "UX audit + sketches + flow map + accessibility checklist أولية." ,"2 ساعة"]],
+deliver:"UX Audit + flow map + low-fidelity sketches + evaluation checklist."
+},
+{title:"Figma Foundations & File Craft",phase:"Figma · 1/8",goal:"التعرف على البيئة وبناء ملف منظم وأساسيات الرسم والـ frames.",topics:["Figma UI","Pages, frames, layers","Shapes and text","Images","Groups and naming","Basic constraints"],tasks:[
+["تعلم", "ابدأ كورس Figma على Coursera: interface، tools، frames، layers." ,"3 ساعة"],
+["Practice", "أنشئ ملفًا بثلاث Pages: Research، Wireframes، UI." ,"1 ساعة"],
+["Recreate", "أعد رسم 3 screens بسيطة من مرجع، بهدف فهم التكوين وليس نسخ الهوية." ,"2 ساعة"],
+["Layer hygiene", "أعد تسمية layers وframes، واستخدم sections وترتيب واضح." ,"1 ساعة"],
+["Typography", "طبّق hierarchy: heading، body، caption، label على شاشة." ,"1 ساعة"],
+["Shapes", "أنشئ 10 عناصر: icons بسيطة/illustrative shapes، cards، dividers." ,"1 ساعة"],
+["تسليم", "5 screens بسيطة منظمة، وتوثيق 5 أخطاء تعلمت تجنبها." ,"2 ساعة"]],
+deliver:"Figma file organized with 5 basic screens and tidy layers/pages."
+},
+{title:"Wireframing & Layout",phase:"Figma · 2/8",goal:"بناء layouts وwireframes واضحة قبل التجميل.",topics:["Grid & spacing","Hierarchy","Alignment","Layout patterns","Forms","Dashboard patterns"],tasks:[
+["تعلم", "تعلم grids، alignment، spacing، layout patterns من الكورس." ,"2 ساعة"],
+["Wireframes", "ارسم 10 wireframes للمشروع: dashboard، list، detail، form، settings وغيرها." ,"3 ساعة"],
+["Consistency", "حدد spacing scale (مثلاً 4/8-based) وطبقه." ,"1 ساعة"],
+["Form design", "صمم form states: default، focus، error، disabled، success." ,"1 ساعة"],
+["Navigation", "اختبر بنية navigation: هل يستطيع مستخدم الوصول للأهداف دون تضارب؟" ,"1 ساعة"],
+["Review", "اعمل critique ذاتيًا باستخدام hierarchy، clarity، consistency." ,"2 ساعة"],
+["تسليم", "Low-fi wireframes تغطي أهم flows." ,"2 ساعة"]],
+deliver:"10 low-fidelity screens + primary flow + spacing/layout rules."
+},
+{title:"Auto Layout — Core",phase:"Figma · 3/8",goal:"إنشاء layouts مرنة قابلة لتغيير المحتوى.",topics:["Auto Layout direction","Padding and gap","Hug/Fill/Fixed","Nested layouts","Alignment","Resizing"],tasks:[
+["تعلم", "دروس Auto Layout: direction، spacing، padding، resizing." ,"2 ساعة"],
+["Buttons", "أنشئ buttons مع icon/text وpadding باستخدام Auto Layout." ,"1 ساعة"],
+["Cards", "أنشئ 3 card patterns قابلة لتغير النص/الأرقام." ,"1 ساعة"],
+["Navigation", "ابنِ header وsidebar باستخدام nested Auto Layout." ,"2 ساعة"],
+["Table", "أنشئ table row/card responsive باستخدام Auto Layout." ,"2 ساعة"],
+["Stress test", "غيّر النصوص والأحجام وتأكد من أن layouts لا تنهار." ,"2 ساعة"],
+["تسليم", "10 reusable layout patterns موثقة." ,"2 ساعة"]],
+deliver:"Auto Layout practice library with flexible buttons, cards, navigation and rows."
+},
+{title:"Components & Variants",phase:"Figma · 4/8",goal:"إنشاء مكونات قابلة لإعادة الاستخدام.",topics:["Components and instances","Variants","Component properties","Boolean/text properties","Instance swapping","Naming"],tasks:[
+["تعلم", "درس Components/Variants من الكورس والمصدر الرسمي." ,"2 ساعة"],
+["Component set", "أنشئ button set: sizes، styles، states؛ تجنب variants غير الضرورية." ,"2 ساعة"],
+["Inputs", "أنشئ input components مع labels، hints، errors، disabled." ,"2 ساعة"],
+["Properties", "استخدم text/boolean properties بصورة مفيدة." ,"1 ساعة"],
+["Instances", "استبدل instances داخل screens دون detached components." ,"1 ساعة"],
+["Library", "رتب component library وسمّ components/variants بطريقة منطقية." ,"2 ساعة"],
+["تسليم", "Component library صغيرة تشمل buttons، inputs، navigation، cards." ,"2 ساعة"]],
+deliver:"Reusable component library (buttons, inputs, cards, navigation) with variants."
+},
+{title:"Visual UI Principles",phase:"Figma · 5/8",goal:"رفع جودة التصميم البصري دون التحول إلى graphic designer.",topics:["Typography hierarchy","Color & contrast","Spacing consistency","Visual hierarchy","Design critique","Accessibility"],tasks:[
+["تعلم", "تعلم typography، color، hierarchy، contrast، visual balance." ,"2 ساعة"],
+["Style guide", "حدد typography scale وpalette وspacing tokens مبدئية." ,"1 ساعة"],
+["Hi-fi", "حوّل 5 wireframes إلى high-fidelity screens." ,"3 ساعة"],
+["Contrast", "راجع contrast وfocus visibility وfont sizes." ,"1 ساعة"],
+["Critique", "اكتب critique لكل screen: hierarchy، alignment، clarity، consistency." ,"2 ساعة"],
+["Improve", "نفذ 5 تحسينات واضحة مع توثيق قبل/بعد." ,"1 ساعة"],
+["تسليم", "5 polished screens مع rationale." ,"2 ساعة"]],
+deliver:"Five polished screens + mini style guide + documented design critique."
+},
+{title:"Responsive Design",phase:"Figma · 6/8",goal:"تصميم واجهات تتكيف مع مقاسات مختلفة.",topics:["Responsive vs adaptive","Breakpoints concept","Constraints","Layout resizing","Mobile patterns","Content prioritization"],tasks:[
+["تعلم", "دروس responsive/adaptive والـ constraints." ,"2 ساعة"],
+["Desktop", "راجع dashboard desktop وحدد ما يتغير وما يبقى." ,"1 ساعة"],
+["Tablet", "صمم tablet layout وراجع navigation/spacing." ,"2 ساعة"],
+["Mobile", "صمم mobile layout، أعِد ترتيب المحتوى لا مجرد تصغيره." ,"2 ساعة"],
+["Stress test", "اختبر المحتوى الطويل، العناصر المتكررة، وoverflow." ,"2 ساعة"],
+["Review", "راجع 3 layouts وفق clarity، usability، hierarchy." ,"1 ساعة"],
+["تسليم", "Desktop/tablet/mobile لنفس flow." ,"2 ساعة"]],
+deliver:"Responsive design set for desktop, tablet and mobile."
+},
+{title:"Prototyping & Interaction",phase:"Figma · 7/8",goal:"تحويل التصميم إلى نموذج يحاكي الاستخدام.",topics:["Prototype connections","Interactions","Overlays","Transitions","Smart Animate","Interactive components"],tasks:[
+["تعلم", "تعلم prototype basics، interactions، overlays، transitions." ,"2 ساعة"],
+["Flow", "اربط 10–15 screens في primary flow." ,"2 ساعة"],
+["Interactions", "أضف menus، modal، tabs أو interaction patterns اللازمة." ,"2 ساعة"],
+["States", "حاكي loading، success، error، empty states." ,"2 ساعة"],
+["Test", "جرّب prototype بنفسك بدون edit mode وسجل friction." ,"1 ساعة"],
+["Refine", "أصلح navigation وinteraction inconsistencies." ,"1 ساعة"],
+["تسليم", "Prototype قابل للتجربة مع 3 scenarios." ,"2 ساعة"]],
+deliver:"Interactive prototype covering key scenarios and state transitions."
+},
+{title:"Design System",phase:"Figma · 8/8",goal:"إنشاء نظام تصميم مصغر منظم قابل للتوسع.",topics:["Design system structure","Tokens","Color/type/spacing","Component architecture","Variants","Documentation"],tasks:[
+["تعلم", "راجع Design Systems من Figma Learn." ,"2 ساعة"],
+["Tokens", "أنشئ color، typography، spacing، radius، shadow tokens." ,"2 ساعة"],
+["Components", "نظم components، variants، states، naming." ,"2 ساعة"],
+["Rules", "وثّق متى يستخدم كل component ومتى لا يستخدم." ,"1 ساعة"],
+["Consistency", "طبّق system على screens؛ لا تترك values عشوائية." ,"2 ساعة"],
+["Audit", "راجع duplication وcomponents غير الضرورية." ,"1 ساعة"],
+["تسليم", "Mini Design System + documentation." ,"2 ساعة"]],
+deliver:"Mini design system with tokens, component library and usage notes."
+},
+{title:"Variables & Modes",phase:"Advanced Figma · 1/4",goal:"إدارة التصميم عبر variables وmodes عند الحاجة.",topics:["Variables","Collections","Color variables","Modes","Light/dark","Token mapping"],tasks:[
+["تعلم", "تعلم variables collections، modes، variable scopes." ,"2 ساعة"],
+["Variables", "حوّل palette إلى variables مع semantic naming." ,"2 ساعة"],
+["Modes", "أضف mode ثاني (dark أو alternate theme) إذا كان مناسبًا." ,"2 ساعة"],
+["Styles", "اربط components بالvariables بدل القيم الثابتة." ,"2 ساعة"],
+["Test", "بدّل mode وراجع contrast، states، consistency." ,"2 ساعة"],
+["Refine", "راجع naming وorganization." ,"1 ساعة"],
+["تسليم", "Variables collection موثقة ومستخدمة." ,"1 ساعة"]],
+deliver:"Semantic variables and tested modes where appropriate."
+},
+{title:"Advanced Component Architecture",phase:"Advanced Figma · 2/4",goal:"تقليل التعقيد وبناء component architecture جيدة.",topics:["Component architecture","Nested components","Property design","Instance swapping","Variant strategy","Library hygiene"],tasks:[
+["تعلم", "راجع component properties، nested components، instance swapping." ,"2 ساعة"],
+["Architecture", "صمم hierarchy لمكونات product UI." ,"2 ساعة"],
+["Properties", "حدد properties المطلوبة وتجنب variant explosion." ,"2 ساعة"],
+["Nested", "ابنِ 2–3 nested components قابلة لإعادة الاستخدام." ,"2 ساعة"],
+["Library", "راجع naming، descriptions، organization." ,"1 ساعة"],
+["Stress test", "اختبر تغيير content/state/size." ,"1 ساعة"],
+["تسليم", "Advanced component library + notes." ,"2 ساعة"]],
+deliver:"Scalable component architecture with practical properties and documentation."
+},
+{title:"Advanced Prototype & Handoff",phase:"Advanced Figma · 3/4",goal:"تجهيز التصميم للتسليم مع سيناريوهات وتفاصيل التنفيذ.",topics:["Complex flows","Interactive components","Edge cases","Dev Mode","Assets","Specifications"],tasks:[
+["Prototype", "راجع interactions وflows complex." ,"2 ساعة"],
+["Scenarios", "غطِّ happy path وedge cases في prototype." ,"2 ساعة"],
+["States", "جهز error/loading/empty/success states لكل feature." ,"2 ساعة"],
+["Handoff", "تعلم Dev Mode وhandoff conventions." ,"2 ساعة"],
+["Assets", "جهز assets وأسماء واضحة وملاحظات." ,"1 ساعة"],
+["Specs", "وثق 3 features: behaviors، validations، edge cases." ,"1 ساعة"],
+["تسليم", "3 development-ready features." ,"2 ساعة"]],
+deliver:"Three handoff-ready features with states, assets, specs and edge cases."
+},
+{title:"Capstone Validation & Portfolio",phase:"Capstone · 4/4",goal:"تجميع المشروع، اختباره، تحسينه، وكتابة Case Study.",topics:["Usability test planning","Moderated test","Iteration","Decision log","Portfolio storytelling","Reflection"],tasks:[
+["Test plan", "اكتب usability test plan: objectives، tasks، consent، observations." ,"1 ساعة"],
+["Testing", "اختبر مع 5 مستخدمين محتملين؛ لا توجههم أثناء أداء المهام." ,"3 ساعة"],
+["Analysis", "لخص findings، severity، patterns، وأدلة." ,"2 ساعة"],
+["Iteration", "نفذ تعديلات أعلى أولوية وسجل rationale." ,"2 ساعة"],
+["Case study", "اكتب case study: المشكلة، البحث، strategy، metrics، flows، design، tests، decisions." ,"2 ساعة"],
+["Portfolio", "جهز screenshots وروابط prototype وملخصًا مناسبًا للمقابلات." ,"1 ساعة"],
+["Reflection", "قيّم المهارات وفق checklist، حدد 3 نقاط ضعف وخطة الشهر التالي." ,"1 ساعة"]],
+deliver:"Complete case study + tested prototype + reflection and next-step plan."
+}
+];
+const STORAGE="pmfigma16_v1";
+let state=JSON.parse(localStorage.getItem(STORAGE)||"{}");
+let active=0;
+function save(){localStorage.setItem(STORAGE,JSON.stringify(state));renderStats();}
+function toast(msg){let t=document.getElementById("toast");t.textContent=msg;t.style.display="block";setTimeout(()=>t.style.display="none",2200)}
+function taskKey(w,t){return "w"+w+"t"+t}
+function getTaskDone(w,t){return !!(state.tasks&&state.tasks[taskKey(w,t)])}
+function setTaskDone(w,t,v){state.tasks=state.tasks||{};state.tasks[taskKey(w,t)]=v;save()}
+function renderNav(filter=""){let nav=document.getElementById("weekNav");nav.innerHTML="";weeks.forEach((w,i)=>{if(filter&&!(`${w.title} ${w.phase} ${w.goal} ${w.topics.join(" ")}`.toLowerCase().includes(filter.toLowerCase())))return;let b=document.createElement("button");b.className="week-btn"+(i===active?" active":"");let done=w.tasks.filter((_,t)=>getTaskDone(i,t)).length;b.innerHTML=`<strong>${i+1}. ${w.title}</strong><small>${w.phase} · ${done}/${w.tasks.length} مهام</small>`;b.onclick=()=>{active=i;renderWeek();renderNav(document.getElementById("search").value)};nav.appendChild(b)})}
+function renderWeek(){let w=weeks[active],c=document.getElementById("content");let tasks=w.tasks.map((task,t)=>`<label class="task ${getTaskDone(active,t)?"done":""}"><input type="checkbox" ${getTaskDone(active,t)?"checked":""} data-task="${t}"><span class="tasktext"><strong>${task[0]} — ${task[1]}</strong><small>الوقت المقترح: ${task[2]}</small></span></label>`).join("");
+let days=["اليوم 1","اليوم 2","اليوم 3","اليوم 4","اليوم 5","اليوم 6"];let daily=days.map((d,i)=>`<div class="daybox"><h4>${d}</h4><p>وقت مقترح: ساعتان · دراسة + تطبيق + مراجعة</p><textarea data-day="${i}" placeholder="اكتب ماذا أنجزت، أسئلة، ملاحظات أو روابط…">${((state.notes||{})["w"+active+"d"+i]||"").replace(/</g,"&lt;")}</textarea></div>`).join("");
+c.innerHTML=`<article class="week-card"><div class="week-title"><div><span class="tag">${w.phase}</span><h2>الأسبوع ${active+1}: ${w.title}</h2></div><span class="muted">${w.tasks.filter((_,t)=>getTaskDone(active,t)).length}/${w.tasks.length} مهام</span></div><p>${w.goal}</p><h3>الموضوعات التي يجب إتقانها</h3><ul>${w.topics.map(x=>`<li>${x}</li>`).join("")}</ul><h3>مهام الأسبوع</h3><div class="tasks">${tasks}</div><h3>المخرج الإلزامي</h3><div class="deliverable">${w.deliver}</div><h3>ملاحظات الأسبوع</h3><div class="notes"><textarea id="weekNote" placeholder="ملاحظات، روابط، مراجعة ذاتية، ما فهمته وما يحتاج مراجعة…">${(state.weekNotes||{})["w"+active]||""}</textarea></div><h3>مذكرات الأيام</h3><div class="daily">${daily}</div><details><summary>مراجعة نهاية الأسبوع (اكتب إجاباتك)</summary><div class="notes"><textarea id="reviewNote" placeholder="1) ما الذي أتقنته؟&#10;2) ما الذي لم أفهمه؟&#10;3) كيف طبقت المعرفة؟&#10;4) ما الدليل على تحسن عملي؟&#10;5) ما أولويات الأسبوع التالي؟">${(state.reviews||{})["w"+active]||""}</textarea></div></details><details><summary>مصادر مجانية مساندة / ملاحظات عامة</summary><ul><li><a href="https://help.figma.com/hc/en-us/sections/23691657321239-Courses-and-collections" target="_blank">Figma Learn (Official)</a></li><li><a href="https://www.producttalk.org/" target="_blank">Product Talk — Discovery</a></li><li><a href="https://www.svpg.com/" target="_blank">SVPG — Product</a></li><li><a href="https://academy.amplitude.com/" target="_blank">Amplitude Academy — Analytics</a></li><li><a href="https://research.google/pubs/heart-framework/" target="_blank">Google HEART Framework</a></li></ul><p class="muted">استخدم مصدرًا مجانيًا فقط لحل موضوع الأسبوع. لا تفتح مسارات تعليمية إضافية.</p></details></article>`;
+c.querySelectorAll("[data-task]").forEach(cb=>cb.onchange=e=>{setTaskDone(active,+e.target.dataset.task,e.target.checked);renderWeek();renderNav(document.getElementById("search").value)});
+c.querySelectorAll("[data-day]").forEach(el=>el.oninput=e=>{state.notes=state.notes||{};state.notes["w"+active+"d"+el.dataset.day]=el.value;save()});
+document.getElementById("weekNote").oninput=e=>{state.weekNotes=state.weekNotes||{};state.weekNotes["w"+active]=e.target.value;save()};
+document.getElementById("reviewNote").oninput=e=>{state.reviews=state.reviews||{};state.reviews["w"+active]=e.target.value;save()};
+renderNav(document.getElementById("search").value);renderStats();
+}
+function renderStats(){let total=weeks.reduce((a,w)=>a+w.tasks.length,0),done=0;weeks.forEach((w,i)=>w.tasks.forEach((_,t)=>{if(getTaskDone(i,t))done++}));let pct=Math.round(done/total*100);document.getElementById("doneCount").textContent=done+" / "+total;document.getElementById("progressPct").textContent=pct+"%";document.getElementById("overallProgress").style.width=pct+"%";document.getElementById("progressLabel").textContent=pct===100?"أنجزت البرنامج!":pct===0?"ابدأ أول مهمة":"استمر، تقدمك محفوظ";document.getElementById("hours").textContent=state.hours||0;
+let sd=state.startDate;if(sd){let days=Math.floor((new Date().setHours(0,0,0,0)-new Date(sd+"T00:00:00").getTime())/86400000);let cw=Math.max(1,Math.min(16,Math.floor(days/7)+1));document.getElementById("currentWeek").textContent=cw;document.getElementById("weekStatus").textContent=days<0?"موعد البداية لم يحن":days>=112?"انتهت مدة البرنامج":"أسبوع "+cw+" من 16";}else{document.getElementById("currentWeek").textContent="—";document.getElementById("weekStatus").textContent="حدد تاريخ البداية"}}
+document.getElementById("search").oninput=e=>renderNav(e.target.value);
+document.getElementById("saveStart").onclick=()=>{state.startDate=document.getElementById("startDate").value;save();toast("تم حفظ تاريخ البداية")};
+document.getElementById("startDate").value=state.startDate||"";
+document.getElementById("export").onclick=()=>{let blob=new Blob([JSON.stringify(state,null,2)],{type:"application/json"});let a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="pm-figma-progress-backup.json";a.click();URL.revokeObjectURL(a.href);toast("تم تنزيل نسخة احتياطية")};
+document.getElementById("importBtn").onclick=()=>document.getElementById("importFile").click();
+document.getElementById("importFile").onchange=e=>{let f=e.target.files[0];if(!f)return;let reader=new FileReader();reader.onload=()=>{try{state=JSON.parse(reader.result);save();document.getElementById("startDate").value=state.startDate||"";renderWeek();toast("تم استيراد البيانات")}catch{toast("ملف غير صالح")}};reader.readAsText(f)};
+renderNav();renderWeek();renderStats();
+</script>
+</body>
+</html>
